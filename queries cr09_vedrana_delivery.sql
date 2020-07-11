@@ -1,8 +1,7 @@
 use cr09_vedrana_delivery;
 
 
-
--- show info about the packages delivered by employee "Gordon" 
+-- show info about the packages delivered by employee "Gordon" and weight more than 2kg
 SELECT 
     cs.first_name AS 'Sender Name',
     cs.last_name AS 'Sender Surname',
@@ -12,6 +11,7 @@ SELECT
     cr.last_name AS 'Receiver Surname',
     zr.zip_code AS 'Reciever ZIP Code',
     cpr.city_place AS 'Reciever City',
+    pa.package_weight_kg AS 'Package Weight',
     d.delivery_status AS 'Delivery Status'
 FROM
     deliveries d
@@ -37,8 +37,11 @@ FROM
     cities_places cps ON cps.id = zs.city_place_ID
         INNER JOIN
     cities_places cpr ON cpr.id = zr.city_place_ID
+        INNER JOIN
+    package_attributes pa ON pa.id = p.package_attributes_ID
 WHERE
     e.first_name = 'Gordon'
+        AND pa.package_weight_kg > 2
 
 
 
@@ -119,7 +122,6 @@ WHERE
 
 
 
-
 -- show packages sent from specific city
 SELECT 
     p.id AS 'package id',
@@ -173,6 +175,49 @@ FROM
     customers cs ON cs.id = p.package_sender
 WHERE
     pe.entry_date BETWEEN '2020-07-01' AND '2020-07-05';
+
+
+
+
+-- show all packages that need to be picked up and their address
+SELECT 
+    c.first_name,
+    c.last_name,
+    a.street_name_and_number,
+    zc.zip_code,
+    pr.request_recieved
+FROM
+    pickup_requests pr
+        INNER JOIN
+    customers c ON c.ID = pr.customer_ID
+        INNER JOIN
+    pickup_locations pl ON pl.ID = pr.pickup_location_ID
+        INNER JOIN
+    addresses a ON pl.address_ID = a.id
+        INNER JOIN
+    zip_codes zc ON zc.ID = a.zip_code_ID
+WHERE
+    pickup_status = 'requested'
+
+
+
+-- show all offices with special funciton and no send and recieve service
+SELECT 
+    po.office_name,
+    po.office_type,
+    a.street_name_and_number,
+    z.zip_code,
+    cp.city_place
+FROM
+    post_offices po
+        INNER JOIN
+    addresses a ON a.id = po.address_ID
+        INNER JOIN
+    zip_codes z ON z.id = a.zip_code_ID
+    inner join
+    cities_places cp on cp.id = z.city_place_ID
+WHERE
+    po.office_type <> 'Post office'
 
 
 

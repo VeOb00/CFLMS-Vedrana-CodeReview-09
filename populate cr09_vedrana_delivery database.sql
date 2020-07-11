@@ -71,7 +71,6 @@ values
 (null, 1200, 1),
 (null, 1210, 1),
 (null, 1220, 1),
-(null, 1230, 1),
 (null, 3100, 2),
 (null, 3104, 2),
 (null, 3105, 2),
@@ -110,16 +109,20 @@ values
 (null, "Wassergasse 11", 3),
 (null, "Rochusgasse 50", 3),
 (null, "Sechskrügelgasse 82", 3),
-(null, "Berliner Straße 20", 47),
-(null, "Pariser Straße 100", 46),
-(null, "Obala Kulina Bana 50", 45)
+(null, "Berliner Straße 20", 46),
+(null, "Pariser Straße 100", 45),
+(null, "Obala Kulina Bana 50", 44),
+(null, "Rennweg 50", 3),
+(null, "Groß-Enzersdorer Straße 20", 22)
 ;
 
 insert into post_offices
 values
-(null, 1),
-(null, 2),
-(null, 3)
+(null, "The City Center Post", "Post office", 1),
+(null, "Prater Post", "Post office", 2),
+(null, "Post 1030", "Post office", 3),
+(null, "Post Headquarters", "Headquarters", 14),
+(null, "Post Sorting Center", "Sorting Center", 15)
 ;
 
 insert into pickup_locations
@@ -200,5 +203,9 @@ values
 (null, "2020-07-01 08:00", "2020-07-01 13:00", "delivered", 6, 4)
 ;
 
-
-
+insert into pickup_requests
+values
+(null, 'done', '2020-06-29', 1, 1),
+(null, 'done', '2020-06-29', 3, 3),
+(null, 'requested', '2020-06-30', 1, 1)
+;

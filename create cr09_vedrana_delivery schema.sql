@@ -36,6 +36,8 @@ CREATE TABLE addresses(
 
 CREATE TABLE post_offices(
     ID int not null auto_increment,
+    office_name varchar(250),
+    office_type varchar(250),
     address_ID int not null,
     primary key(ID),
     foreign key(address_ID) references addresses(ID)
@@ -117,4 +119,15 @@ CREATE TABLE deliveries(
     primary key(ID),
     foreign key(package_entry_ID) references package_entries(ID),
     foreign key(employee_delivering_ID) references employees(ID)
+);
+
+CREATE TABLE pickup_requests(
+    ID int not null auto_increment,
+    pickup_status enum('requested', 'in progress', 'done') not null DEFAULT 'requested',
+    request_recieved date,
+    customer_ID int not null,
+    pickup_location_ID int not null,
+    primary key(ID),
+    foreign key(customer_ID) references customers(ID),
+    foreign key(pickup_location_ID) references pickup_locations(ID)
 );
